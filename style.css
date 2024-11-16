@@ -8,8 +8,28 @@
 body {
     font-family: Arial, sans-serif;
     color: white;
-    background: linear-gradient(35deg, black 65%, white 75%);
+    background-color: #000;
+    /*background: linear-gradient(40deg, white 0%,black 20%, black 60%, white 100%);*/
     overflow-x: hidden;
+}
+
+/* Gradient CSS */
+.blob {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 650px;
+    height: 650px;
+    border-radius: 100%;
+    background-image: linear-gradient(#1100ff 35%, #ff00f2 0%);
+    filter: blur(250px);
+    transition: all 450ms ease-out;
+    position: fixed;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    transform: translate(calc(-50% + 15px), -50%);
+    z-index: -1;
 }
 
 /* Header et Navigation */
@@ -45,6 +65,7 @@ header.light nav a {
     justify-content: center;
     text-align: center;
     position: relative;
+    mix-blend-mode: difference;
 }
 
 #name {

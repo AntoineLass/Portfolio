@@ -8,13 +8,6 @@ document.querySelectorAll('nav a').forEach(anchor => {
     });
 });
 
-function getBackgroundColor(element) {
-    const computedStyle = window.getComputedStyle(element);
-    const backgroundColor = computedStyle.backgroundColor; // Récupère la couleur de fond
-
-    return backgroundColor;
-}
-
 PowerGlitch.glitch('.glitch', {
     "playMode": "hover",
     "createContainers": true,
@@ -39,4 +32,14 @@ PowerGlitch.glitch('.glitch', {
       "hueRotate": true
     },
     "pulse": false
+  });
+
+  var cursor = document.querySelector('.blob');
+
+  document.addEventListener('mousemove', function(e){
+    var x = e.clientX;
+    var y = e.clientY;
+    var tmp = e.clientX/5;
+    cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
+    cursor.style.backgroundImage = `linear-gradient(${tmp}deg,#1100ff 35%, #ff00f2 0%)`
   });
