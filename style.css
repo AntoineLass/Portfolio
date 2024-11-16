@@ -1,0 +1,92 @@
+/* Styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+    background: linear-gradient(35deg, black 65%, white 75%);
+    overflow-x: hidden;
+}
+
+/* Header et Navigation */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+    z-index: 10;
+    transition: color 0.3s;
+    mix-blend-mode: difference;
+}
+
+header nav a{
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+/*
+header.light nav a {
+    color: black;
+}*/
+
+
+/* Section Accueil */
+#home {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+#name {
+    font-size: 4rem;
+    transition: color 0.3s;
+}
+
+
+/* Lorsque le fond est clair, le texte devient foncé */
+
+
+/* Autres Sections */
+#projects, #contact {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+#projects {
+    color: white;
+}
+
+#contact {
+    color: white;
+}
+
+.project-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.project-item {
+    background-color: #ddd;
+    padding: 1rem;
+    width: 200px;
+    border-radius: 8px;
+    color: black;
+}
+
+/* Footer */
+footer {
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
