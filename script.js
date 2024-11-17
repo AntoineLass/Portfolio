@@ -41,5 +41,21 @@ PowerGlitch.glitch('.glitch', {
     var y = e.clientY;
     var tmp = e.clientX/5;
     cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
-    cursor.style.backgroundImage = `linear-gradient(${tmp}deg,#1100ff 35%, #ff00f2 0%)`
+    //cursor.style.backgroundImage = `linear-gradient(${tmp}deg,#1100ff 35%, #ff00f2 45%)`
+  });
+
+
+const swiper = new Swiper('.swiper-container', {
+    initialSlide: 1,
+    loop: false,
+    slidesPerView: 1, // Affiche une seule slide à la fois
+    spaceBetween: 80, // Espace entre les slides (en pixels)
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
   });

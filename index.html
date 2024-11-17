@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/powerglitch@latest/dist/powerglitch.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,18 +27,62 @@
             </div>
         </section>
 
+        <section id="resume">
+            <h2>About me</h2>
+        </section>
+
         <section id="projects">
             <h2>My Projects</h2>
-            <div class="project-gallery">
-                <div class="project-item">Project 1</div>
-                <div class="project-item">Project 2</div>
-                <div class="project-item">Project 3</div>
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <!-- Projet 1 -->
+                <div class="swiper-slide project-item">
+                  <img src="path/to/project1.jpg" alt="Project 1" class="project-image" />
+                  <div class="project-content">
+                    <h3>Piquette</h3>
+                    <p class="project-summary">Brief summary of Project 1, explaining its purpose and main features.</p>
+                    <div class="project-links">
+                      <a href="https://briossant.com/piquette/" target="_blank">Website</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Projet 2 -->
+                <div class="swiper-slide project-item">
+                  <img src="path/to/project2.jpg" alt="Project 2" class="project-image" />
+                  <div class="project-content">
+                    <h3>BAME-OCR</h3>
+                    <p class="project-summary">Brief summary of Project 2, explaining its purpose and main features.</p>
+                    <div class="project-links">
+                      <a href="https://github.com/AntoineLass/BAME-OCR" target="_blank">GitHub</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Projet 3 -->
+                <div class="swiper-slide project-item">
+                  <img src="path/to/project3.jpg" alt="Project 3" class="project-image" />
+                  <div class="project-content">
+                    <h3>This website</h3>
+                    <p class="project-summary">Brief summary of Project 3, explaining its purpose and main features.</p>
+                    <div class="project-links">
+                      <a href="https://github.com/AntoineLass/Portfolio" target="_blank">GitHub</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Pagination and navigation -->
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-pagination"></div>
             </div>
+          </section>
+
+        <section id="interest">
+            <h2>Interest</h2>
         </section>
 
         <section id="contact">
             <h2>Contactez-moi</h2>
-            <p>Email: <a href="mailto:exemple@mail.com">exemple@mail.com</a></p>
+            <p>Email: <a href="antoine.lassagne@outlook.com">antoine.lassagne@outlook.com</a></p>
         </section>
     </main>
 
