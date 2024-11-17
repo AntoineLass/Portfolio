@@ -82,12 +82,11 @@ header.light nav a {
     mix-blend-mode: difference;
 }
 
-  .resume-text{
+#rt{
     padding: 2rem 1rem;
     width: 560px;
-    transform: translateX(85%);
     position: relative;
-    text-align: center;
+    margin: auto;
   }
 
 #projects h2{
