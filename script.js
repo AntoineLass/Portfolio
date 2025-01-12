@@ -59,3 +59,24 @@ const swiper = new Swiper('.swiper-container', {
       prevEl: '.swiper-button-prev',
     },
   });
+
+  document.getElementById('contact-form').addEventListener('send', function(e) {
+    e.preventDefault(); // Empêche le rechargement de la page
+    const form = e.target;
+
+    // Envoie le formulaire
+    fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+    }).then(response => {
+        if (response.ok) {
+            alert('Thank for your message ! I will get back to you really soon.');
+            form.reset(); // Réinitialise le formulaire
+        } else {
+            alert('An error Occurs. Please try again later.');
+        }
+    }).catch(error => {
+        alert('An error Occurs. Please try again later.');
+    });
+});
