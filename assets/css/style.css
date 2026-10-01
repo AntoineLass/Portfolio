@@ -462,7 +462,8 @@ main,
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: calc(var(--nav-h) + 32px) 0 210px;
+  /* la marge du bas réserve la place du compagnon (et de sa bulle sur mobile) */
+  padding: calc(var(--nav-h) + 32px) 0 250px;
 }
 
 .hero__kicker {
@@ -547,6 +548,7 @@ main,
   right: 0;
   bottom: 40px;
   height: 160px;
+  z-index: 2;
   pointer-events: none;
 }
 /* le sol masque doucement la carte pour que le chien reste lisible */
@@ -568,15 +570,33 @@ main,
   background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 10px);
 }
 .ground__meta {
+  appearance: none;
   position: absolute;
-  bottom: 0;
-  right: var(--gutter);
+  bottom: -8px;
+  right: calc(var(--gutter) - 6px);
+  padding: 8px 6px;
   font: 400 11px var(--mono);
   color: var(--fg-3);
+  background: none;
+  border: 0;
   white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color 0.15s ease;
+}
+.ground__meta:hover,
+.ground__meta[aria-expanded="true"] {
+  color: var(--fg);
 }
 .ground__meta .fsm {
   color: var(--accent);
+}
+.ground__meta .chev {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+.ground__meta[aria-expanded="true"] .chev {
+  transform: rotate(180deg);
 }
 .ground__hint {
   position: absolute;
@@ -586,53 +606,140 @@ main,
   color: var(--fg-3);
 }
 
-.dog {
+/* Le compagnon : chien, robot ou drone (assets/js/robot.js) */
+.pet {
   position: absolute;
   bottom: 23px;
   left: 0;
-  margin: 0;
-  font: 400 15px/1.25 var(--mono);
-  color: var(--fg);
-  white-space: pre;
   pointer-events: auto;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  will-change: transform;
+}
+.pet__sprite,
+.pet__shadow {
+  margin: 0;
+  font: 400 15px/1.25 var(--mono);
+  white-space: pre;
+}
+.pet__sprite {
+  color: var(--fg);
   will-change: transform;
   background: var(--bg);
   box-shadow: 0 0 18px 14px var(--bg);
   border-radius: 40%;
 }
-.dog .acc {
+.pet__sprite .acc {
   color: var(--accent);
 }
-.dog .dim {
+.pet__shadow {
+  position: absolute;
+  left: 0;
+  bottom: -0.55em;
   color: var(--fg-3);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
 }
 
 .bubble {
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: 1;
   margin: 0;
   font: 400 12px/1.25 var(--mono);
   color: var(--fg);
+  background: var(--bg);
   white-space: pre;
   opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.15s ease;
   pointer-events: none;
 }
 .bubble.is-on {
   opacity: 1;
-  transform: none;
 }
 .bubble .acc {
   color: var(--accent);
 }
 
+/* Menu des ordres, ouvert par un clic sur le compagnon */
+.pet-menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: max-content;
+  max-width: min(292px, calc(100vw - 12px));
+  padding: 9px 10px 10px;
+  font: 400 12px/1.4 var(--mono);
+  color: var(--fg-2);
+  background: var(--bg);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+}
+.pet-menu[hidden] {
+  display: none;
+}
+.pet-menu__say {
+  margin: 0;
+  min-height: 1.4em;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+.pet-menu__say b {
+  font-weight: 400;
+  color: var(--accent);
+}
+.pet-menu__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.pet-menu__row--kinds {
+  padding-top: 7px;
+  border-top: 1px dashed var(--line-2);
+}
+.chip {
+  appearance: none;
+  padding: 4px 8px;
+  font: 400 11.5px/1.5 var(--mono);
+  color: var(--fg-2);
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.chip:hover {
+  color: var(--fg);
+  border-color: var(--fg-3);
+}
+.chip[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.pet-menu__row--kinds .chip[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background: var(--fg);
+  border-color: var(--fg);
+}
+
 @media (max-width: 600px) {
-  .dog {
+  .hero {
+    padding-bottom: 262px;
+  }
+  .pet__sprite,
+  .pet__shadow {
     font-size: 12px;
   }
   .ground__hint {
@@ -662,6 +769,38 @@ main,
 .about__text strong {
   font-weight: 500;
   color: var(--fg);
+}
+
+/* Panneaux de texte : fond presque opaque + flou, pour rester lisible
+   par-dessus le circuit du fond */
+.about__text,
+.timeline,
+.prose__body,
+.section__lead,
+.project__lead {
+  background: var(--card);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.about__text,
+.timeline,
+.prose__body {
+  box-shadow: var(--shadow);
+}
+.about__text {
+  padding: 22px 24px 6px;
+}
+.section__lead,
+.project__lead {
+  width: fit-content;
+  padding: 10px 14px;
+}
+@media (max-width: 600px) {
+  .about__text {
+    padding: 16px 16px 2px;
+  }
 }
 
 .spec {
@@ -966,19 +1105,25 @@ main,
 /* ---------- Parcours ---------- */
 
 .timeline {
+  --tl-pad: 26px;
   position: relative;
   margin: 0;
-  padding: 0;
+  padding: var(--tl-pad) var(--tl-pad) var(--tl-pad) calc(var(--tl-pad) - 4px);
   list-style: none;
 }
 .timeline::before {
   content: "";
   position: absolute;
-  top: 8px;
-  bottom: 8px;
-  left: 7px;
+  top: calc(var(--tl-pad) + 8px);
+  bottom: calc(var(--tl-pad) + 8px);
+  left: calc(var(--tl-pad) + 3px);
   width: 1px;
   background: var(--line-2);
+}
+@media (max-width: 600px) {
+  .timeline {
+    --tl-pad: 16px;
+  }
 }
 
 .tl {
@@ -1600,7 +1745,19 @@ a.link-row:hover {
 }
 .prose__body {
   max-width: 68ch;
+  padding: 18px 22px 6px;
   color: var(--fg-2);
+}
+.prose__body:has(> ul) {
+  padding: 4px 22px;
+}
+.prose__body:has(> .gallery) {
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 .prose__body p {
   margin: 0 0 1em;

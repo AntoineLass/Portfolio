@@ -284,24 +284,64 @@ window.ASCII = (function () {
       lo: [/░+/g, 'hdr', /▲ (free|used)/g]
     },
 
-    sudoku: {
-      text: art(String.raw`
-       ┌───────┬───────┬───────┐
-       │ 5 3 · │ · 7 · │ · · · │
-       │ 6 · · │ 1 9 5 │ · · · │
-       │ · 9 8 │ · · · │ · 6 · │
-       ├───────┼───────┼───────┤
-       │ 8 · · │ · 6 · │ · · 3 │
-       │ 4 · · │ 8 · 3 │ · · 1 │
-       │ 7 · · │ · 2 · │ · · 6 │
-       ├───────┼───────┼───────┤
-       │ · 6 · │ · · · │ 2 8 · │
-       │ · · · │ 4 1 9 │ · · 5 │
-       │ · · · │ · 8 · │ · 7 9 │
-       └───────┴───────┴───────┘
-`),
-      acc: [/[1-9]/g],
-      lo: ['·']
+    // OCR : la grille est lue (chiffres imprimés), puis le solveur la complète
+    ocr: {
+      cols: 44,
+      frame: function (t) {
+        var GIVEN = '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79';
+        var SOLVED = '534678912672195348198342567859761423426853791713924856961537284287419635345286179';
+        var STEPS = ['photo', 'gray', 'lines', 'warp', 'ocr', 'solve'];
+        var READ = 1.6, FILL = 5.6, HOLD = 2.4;
+        var u = (t + 2.6) % (READ + FILL + HOLD);
+        var read = Math.min(81, Math.floor((u / READ) * 81));       // cases déjà lues
+        var blanks = 81 - GIVEN.replace(/\./g, '').length;
+        var solved = u < READ ? 0 : Math.min(blanks, Math.floor(((u - READ) / FILL) * blanks));
+        var step = u < READ ? Math.min(4, Math.floor((u / READ) * 5)) : 5;
+        var spans = [];
+        var text = '';
+        function put(s, cls) {
+          if (cls) spans.push([text.length, text.length + s.length, cls]);
+          text += s;
+        }
+
+        put('  ');
+        STEPS.forEach(function (s, i) {
+          if (i) put(' ▸ ', 'lo');
+          put(s, i === step ? 'acc' : i < step ? 'hi' : 'lo');
+        });
+        put('\n');
+
+        var seen = 0;
+        for (var r = 0; r < 9; r++) {
+          if (r % 3 === 0) put('         ' + (r ? '├───────┼───────┼───────┤' : '┌───────┬───────┬───────┐') + '\n');
+          put('         │');
+          for (var c = 0; c < 9; c++) {
+            var i = r * 9 + c;
+            put(' ');
+            if (GIVEN[i] !== '.') {
+              if (i < read) put(GIVEN[i], 'hi');
+              else put('▒', 'lo');
+            } else {
+              if (seen < solved) put(SOLVED[i], 'acc');
+              else if (seen === solved && u >= READ && solved < blanks) put(String(1 + Math.floor(t * 24) % 9), 'acc');
+              else put('·', 'lo');
+              seen++;
+            }
+            if (c % 3 === 2) put(' │');
+          }
+          put('\n');
+        }
+        put('         └───────┴───────┴───────┘\n');
+
+        var done = solved >= blanks;
+        var W = 16;
+        var n = Math.round((u < READ ? read / 81 : solved / blanks) * W);
+        put('  ' + (u < READ ? 'ocr  ' : 'solve') + ' ');
+        put(new Array(n + 1).join('█'), 'acc');
+        put(new Array(W - n + 1).join('░'), 'lo');
+        put(' ' + (u < READ ? read + '/81' : done ? 'solved ✓' : solved + '/' + blanks), done ? 'acc' : 'lo');
+        return { text: text, spans: spans };
+      }
     }
   };
 
@@ -316,7 +356,7 @@ window.ASCII = (function () {
     return new RegExp(p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
   }
 
-  function classify(text, a) {
+  function classify(text, a, spans) {
     var cls = new Array(text.length);
     [['lo', a.lo], ['hi', a.hi], ['acc', a.acc]].forEach(function (pair) {
       (pair[1] || []).forEach(function (p) {
@@ -328,11 +368,16 @@ window.ASCII = (function () {
         }
       });
     });
+    // un dessin animé peut colorer lui-même des plages : [début, fin, classe]
+    (spans || []).forEach(function (s) {
+      for (var i = s[0]; i < s[1]; i++) cls[i] = s[2];
+    });
     return cls;
   }
 
-  function toHtml(text, a) {
-    var cls = classify(text, a);
+  function toHtml(frame, a) {
+    var text = frame.text != null ? frame.text : frame;
+    var cls = classify(text, a, frame.spans);
     var html = '';
     var i = 0;
     while (i < text.length) {
@@ -350,9 +395,13 @@ window.ASCII = (function () {
     return a.frame ? a.frame(t) : a.text;
   }
 
+  function plain(frame) {
+    return frame.text != null ? frame.text : frame;
+  }
+
   function colsOf(a) {
     if (a.cols) return a.cols;
-    var lines = textOf(a, 0).split('\n');
+    var lines = plain(textOf(a, 0)).split('\n');
     return lines.reduce(function (m, l) { return Math.max(m, l.length); }, 0);
   }
 
@@ -366,7 +415,7 @@ window.ASCII = (function () {
     opts = opts || {};
     var pre = document.createElement('pre');
     pre.setAttribute('aria-hidden', 'true');
-    var sample = textOf(a, 0).split('\n');
+    var sample = plain(textOf(a, 0)).split('\n');
     el.style.setProperty('--cols', String(Math.max(colsOf(a), 30)));
     el.style.setProperty('--rows', String(Math.max(sample.length, 8)));
     el.appendChild(pre);

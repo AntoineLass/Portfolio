@@ -8,8 +8,8 @@ window.I18N = (function () {
   'use strict';
 
   var EN = {
-    'meta.title': 'Antoine Lassagne — embedded systems',
-    'meta.desc': 'Portfolio of Antoine Lassagne, engineering student at EPITA (GISTRE major) and SESI Master\'s student at Sorbonne University: embedded systems, real-time, FPGA.',
+    'meta.title': 'Antoine Lassagne — embedded & low-level software',
+    'meta.desc': 'Portfolio of Antoine Lassagne, engineering student at EPITA (GISTRE major) and SESI Master\'s student at Sorbonne University: embedded software, low-level, real-time.',
     'skip': 'Skip to content',
     'nav.menu': 'Menu',
     'nav.about': 'about',
@@ -19,26 +19,27 @@ window.I18N = (function () {
     'nav.lang': 'Passer en français',
     'nav.theme': 'Toggle theme',
 
-    'hero.role': 'Engineering student in <strong>embedded &amp; real-time systems</strong>, somewhere between code and silicon.',
+    'hero.role': 'Engineering student in <strong>embedded software &amp; real-time systems</strong>: code first, hardware never far away.',
     'hero.bootlog': 'Summary',
     'boot.0': 'Mounted /epita/gistre — real-time &amp; embedded systems',
     'boot.1': 'Mounted /sorbonne/sesi — Master\'s, double degree',
-    'boot.2': 'Drivers loaded: STM32 · RP2350 · FPGA · Linux · CUDA',
+    'boot.2': 'Drivers loaded: C · C++ · Linux · STM32 · FPGA · CUDA',
     'boot.3': 'Looking for an end-of-studies internship · Feb → Jun 2027',
     'hero.cta1': 'see projects',
     'hero.cta2': 'get in touch',
-    'hero.hint': '// click anywhere to send a signal',
+    'hero.hint': '// a click sends a signal · click on it to give it a command',
+    'pet.toggle': 'Give the companion a command',
 
     'about.title': 'About',
-    'about.p1': 'I\'m an engineering student at EPITA, majoring in <strong>GISTRE</strong> — real-time and embedded systems — on a double degree with the <strong>SESI Master\'s at Sorbonne University</strong>. What draws me in is the boundary between software and hardware: a driver, a control loop, a signal that shows up (or doesn\'t) on the right pin.',
-    'about.p2': 'During my internship at <strong>Inpixal</strong>, I designed and delivered an automated test bench for video-processing FPGA boards end to end: it caught two critical firmware bugs as soon as it went live. Since then, I\'ve driven a quadruped robot in real time, designed a processor in VHDL and routed a board in KiCad.',
+    'about.p1': 'I\'m an engineering student at EPITA, majoring in <strong>GISTRE</strong> — real-time and embedded systems — on a double degree with the <strong>SESI Master\'s at Sorbonne University</strong>. My playground is software that sits right next to the hardware: drivers, firmware, real-time control loops. I am a developer first — but I can read a schematic, reach for the oscilloscope and route a board when it is needed.',
+    'about.p2': 'During my internship at <strong>Inpixal</strong>, I designed and delivered an automated test bench for video-processing FPGA boards end to end: it caught two critical firmware bugs as soon as it went live. I also modernised a Linux PCIe driver there and met a 40 ms per-frame real-time constraint. On the project side: real-time control of a quadruped robot, a POSIX shell, a memory allocator — and, wearing the hardware hat, a processor in VHDL and a board routed in KiCad.',
     'about.p3': 'This year I\'m branching out into parallel computing and accelerators: CUDA, high-level synthesis, manycore architectures. Away from the oscilloscope, I build and fly FPV drones, and I do competitive scale modelling — up to the French championship.',
     'about.spec': 'Summary sheet',
     'about.specTitle': 'datasheet',
     'spec.k1': 'education',
     'spec.v1': 'EPITA — engineering degree, GISTRE major<span class="sub">Sorbonne University — SESI Master\'s · 2026 → 2027</span>',
     'spec.k2': 'looking for',
-    'spec.v2': '<span class="led" aria-hidden="true"></span>End-of-studies internship in embedded systems<span class="sub">February → June 2027</span>',
+    'spec.v2': '<span class="led" aria-hidden="true"></span>End-of-studies internship in embedded / low-level software<span class="sub">February → June 2027</span>',
     'spec.k3': 'playground',
     'spec.k4': 'languages',
     'spec.v4': 'French (native) · English (B2-C1)<span class="sub">TOEIC 890/990 · semester in Australia</span>',
@@ -55,9 +56,9 @@ window.I18N = (function () {
     'path.k.work': 'experience',
     'path.k.asso': 'student life',
     'path.0.date': 'Feb → Jun 2027',
-    'path.0.title': 'End-of-studies internship — embedded systems',
+    'path.0.title': 'End-of-studies internship — embedded &amp; low-level software',
     'path.0.org': 'Your company?',
-    'path.0.body': 'I\'m looking for a 5-month internship starting in February 2027 to complete my EPITA × Sorbonne double degree. Embedded, real-time, FPGA or accelerators: <a href="#contact">let\'s talk →</a>',
+    'path.0.body': 'I\'m looking for a 5-month internship starting in February 2027 to complete my EPITA × Sorbonne double degree. Embedded software, low-level, real-time or accelerators (GPU, FPGA): <a href="#contact">let\'s talk →</a>',
     'path.1.title': 'SESI Master\'s — Electronic and Computer Systems',
     'path.1.org': 'Sorbonne University · Paris · double degree with EPITA',
     'path.1.body': 'Chosen courses: <strong>PACC</strong> (parallelism and accelerators: CUDA/OpenCL, SIMD, MPI), <strong>PBD-HLS</strong> (hardware/software co-design and high-level synthesis, with a LeNet CNN on Zynq), <strong>MASSOC</strong> (SoC modelling and simulation, SystemC), <strong>SMC</strong> (manycore architectures and their OS) and <strong>HOTOP</strong> (research seminars: AI accelerators, hardware security…).',
@@ -83,19 +84,20 @@ window.I18N = (function () {
     'skills.title': 'Skills',
     'skills.h1': 'function',
     'skills.h2': 'detail',
-    'skills.1.k': 'Embedded &amp; robotics',
-    'skills.1.v': 'C, C++ · STM32, ESP32, RP2350, Raspberry Pi · real-time control loops · state machines',
-    'skills.2.k': 'FPGA &amp; electronics',
-    'skills.2.v': 'VHDL · FPGA (MAX10) · PCB design in KiCad · soldering',
-    'skills.3.k': 'Low level &amp; Linux',
-    'skills.3.v': 'Drivers (PCIe) · multithreading · real-time · Lua/LuaJIT + FFI · x86 assembly',
+    'skills.1.k': 'Embedded &amp; real-time',
+    'skills.1.v': 'C, C++ · STM32, ESP32, Raspberry Pi · real-time control loops · state machines · on-target debugging <span class="note">(ST-Link probe, GDB)</span>',
+    'skills.2.k': 'Low level &amp; Linux',
+    'skills.2.v': 'Linux drivers (PCIe) · multithreading · memory management · POSIX processes and shell · Lua/LuaJIT + FFI · x86 assembly',
+    'skills.3.k': 'GPU &amp; parallel computing',
+    'skills.3.v': 'CUDA <span class="note">(self-taught, ongoing project)</span> · Nsight Systems · parallel programming models',
     'skills.4.k': 'Protocols &amp; signal',
-    'skills.5.k': 'GPU &amp; parallel computing',
-    'skills.5.v': 'CUDA <span class="note">(self-taught, ongoing project)</span> · Nsight Systems · parallel programming models',
-    'skills.6.k': 'Software &amp; tools',
-    'skills.6.v': 'Git · Bash · Python (scripting) · Java (Quarkus, Hibernate, Kafka) · technical writing',
-    'skills.7.k': 'Languages',
-    'skills.7.v': 'French (native) · English B2-C1 <span class="note">(TOEIC 890/990)</span>',
+    'skills.5.k': 'Testing &amp; tools',
+    'skills.5.v': 'Automated test benches · non-regression testing · Git · Bash · Python (scripting) · technical writing',
+    'skills.6.k': 'FPGA &amp; electronics',
+    'skills.6.v': 'VHDL · FPGA (MAX10) · PCB design in KiCad · soldering · 3D printing',
+    'skills.7.k': 'Application software',
+    'skills.8.k': 'Languages',
+    'skills.8.v': 'French (native) · English B2-C1 <span class="note">(TOEIC 890/990)</span>',
 
     'contact.title': 'Contact',
     'contact.intro': 'An internship, a project, a question about an article? Write to me directly:',
@@ -148,23 +150,59 @@ window.I18N = (function () {
       errName: 'erreur : le champ « nom » est vide.',
       errMsg: 'erreur : le message est vide.',
       langLabel: 'Switch to English',
-      robot: [
-        'WOOF → 0x57 0x4F 0x4F 0x46',
-        'ping ? pong.',
-        'ACK ✓',
-        'watchdog nourri ✓',
-        'servo : 1,5 ms, au neutre',
-        '115200 8N1',
-        'bip boup',
-        '*remue la queue*',
-        'HardFault ? pas aujourd\'hui.',
-        'IK : ok',
-        'SPI : 0xA5 → 0x5A',
-        'je cherche un stage, moi aussi',
-        'sudo assis'
-      ],
-      robotIrq: ['IRQ !', 'irq reçue', 'interruption ⚡', 'ISR ok'],
-      robotWake: '!? je ne dormais pas.'
+      petKinds: { dog: 'chien', robot: 'robot', drone: 'drone' },
+      petCmdLabel: 'Ordres',
+      petKindLabel: 'Choix du compagnon',
+      petCmds: {
+        dog: { follow: 'suis-moi', stay: 'pas bouger', sit: 'assis', trick: 'saute', sleep: 'dodo' },
+        robot: { follow: 'suivre', stay: 'halte', sit: 'accroupi', trick: 'danse', sleep: 'veille' },
+        drone: { follow: 'suivre', stay: 'stationnaire', sit: 'atterrir', trick: 'flip', sleep: 'désarmer' }
+      },
+      petAck: {
+        dog: { follow: 'je te suis !', stay: 'pas bouger. reçu ✓', sit: 'assis ✓', trick: 'hop !', sleep: 'z z Z' },
+        robot: { follow: 'suivi activé ✓', stay: 'halte ✓', sit: 'accroupi ✓', trick: 'danse.exe', sleep: 'mise en veille…' },
+        drone: { follow: 'follow-me ✓', stay: 'stationnaire ✓', sit: 'atterrissage…', trick: 'flip !', sleep: 'désarmé.' }
+      },
+      petSay: {
+        dog: [
+          'WOOF → 0x57 0x4F 0x4F 0x46',
+          'ping ? pong.',
+          'ACK ✓',
+          'watchdog nourri ✓',
+          'servo : 1,5 ms, au neutre',
+          '115200 8N1',
+          '*remue la queue*',
+          'HardFault ? pas aujourd\'hui.',
+          'IK : ok',
+          'SPI : 0xA5 → 0x5A',
+          'je cherche un stage, moi aussi',
+          'sudo assis'
+        ],
+        robot: [
+          'bip boup',
+          'ACK ✓',
+          'ping ? pong.',
+          'while (1) { rouler(); }',
+          'encodeurs : ok',
+          'batterie : 87 %',
+          '0b101010',
+          'segfault ? jamais entendu parler.',
+          'je cherche un stage, moi aussi'
+        ],
+        drone: [
+          'armé ⚡',
+          'vbat : 16,4 V',
+          'RSSI : -52 dBm',
+          'acro ou rien',
+          'failsafe ? pas aujourd\'hui.',
+          'gyro : calibré ✓',
+          'PID : ça oscille à peine',
+          'je cherche un stage, moi aussi'
+        ]
+      },
+      petIrq: ['IRQ !', 'irq reçue', 'interruption ⚡', 'ISR ok'],
+      petWake: { dog: '!? je ne dormais pas.', robot: '!? veille interrompue.', drone: '!? réarmement.' },
+      petZzz: { dog: 'z z Z', robot: 'z z Z', drone: '· · ·' }
     },
     en: {
       back: 'cd ../projects',
@@ -197,23 +235,59 @@ window.I18N = (function () {
       errName: 'error: the "name" field is empty.',
       errMsg: 'error: the message is empty.',
       langLabel: 'Passer en français',
-      robot: [
-        'WOOF → 0x57 0x4F 0x4F 0x46',
-        'ping? pong.',
-        'ACK ✓',
-        'watchdog fed ✓',
-        'servo: 1.5 ms, centred',
-        '115200 8N1',
-        'beep boop',
-        '*wags tail*',
-        'HardFault? not today.',
-        'IK: ok',
-        'SPI: 0xA5 → 0x5A',
-        'looking for an internship too',
-        'sudo sit'
-      ],
-      robotIrq: ['IRQ!', 'irq received', 'interrupt ⚡', 'ISR ok'],
-      robotWake: '!? I wasn\'t sleeping.'
+      petKinds: { dog: 'dog', robot: 'robot', drone: 'drone' },
+      petCmdLabel: 'Commands',
+      petKindLabel: 'Choose the companion',
+      petCmds: {
+        dog: { follow: 'follow', stay: 'stay', sit: 'sit', trick: 'jump', sleep: 'sleep' },
+        robot: { follow: 'follow', stay: 'halt', sit: 'crouch', trick: 'dance', sleep: 'standby' },
+        drone: { follow: 'follow', stay: 'hover', sit: 'land', trick: 'flip', sleep: 'disarm' }
+      },
+      petAck: {
+        dog: { follow: 'right behind you!', stay: 'staying. copy ✓', sit: 'sitting ✓', trick: 'hop!', sleep: 'z z Z' },
+        robot: { follow: 'tracking on ✓', stay: 'halted ✓', sit: 'crouched ✓', trick: 'dance.exe', sleep: 'going to standby…' },
+        drone: { follow: 'follow-me ✓', stay: 'position hold ✓', sit: 'landing…', trick: 'flip!', sleep: 'disarmed.' }
+      },
+      petSay: {
+        dog: [
+          'WOOF → 0x57 0x4F 0x4F 0x46',
+          'ping? pong.',
+          'ACK ✓',
+          'watchdog fed ✓',
+          'servo: 1.5 ms, centred',
+          '115200 8N1',
+          '*wags tail*',
+          'HardFault? not today.',
+          'IK: ok',
+          'SPI: 0xA5 → 0x5A',
+          'looking for an internship too',
+          'sudo sit'
+        ],
+        robot: [
+          'beep boop',
+          'ACK ✓',
+          'ping? pong.',
+          'while (1) { roll(); }',
+          'encoders: ok',
+          'battery: 87%',
+          '0b101010',
+          'segfault? never heard of it.',
+          'looking for an internship too'
+        ],
+        drone: [
+          'armed ⚡',
+          'vbat: 16.4 V',
+          'RSSI: -52 dBm',
+          'acro or nothing',
+          'failsafe? not today.',
+          'gyro: calibrated ✓',
+          'PID: barely oscillating',
+          'looking for an internship too'
+        ]
+      },
+      petIrq: ['IRQ!', 'irq received', 'interrupt ⚡', 'ISR ok'],
+      petWake: { dog: '!? I wasn\'t sleeping.', robot: '!? standby interrupted.', drone: '!? re-arming.' },
+      petZzz: { dog: 'z z Z', robot: 'z z Z', drone: '· · ·' }
     }
   };
 

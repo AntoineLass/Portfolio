@@ -26,7 +26,7 @@
   // poids d'affichage de chaque type dans la couche de base
   var WEIGHT = [0, 1, 1, 1.1, 1.1, 0.75, 0.45, 0.9];
 
-  var CHIP_LABELS = ['STM32F4', 'RP2350', 'MAX10', 'BCM2711', 'MPU6050', 'ESP32', 'MAX485', 'FT232', 'W25Q64', 'LM1117', 'ATMEGA', 'ZYNQ', 'TPS5430', 'SN65HVD'];
+  var CHIP_LABELS = ['STM32F4', 'MAX10', 'BCM2711', 'MPU6050', 'ESP32', 'MAX485', 'FT232', 'W25Q64', 'LM1117', 'ATMEGA', 'ZYNQ', 'TPS5430', 'SN65HVD'];
   var SILK_LABELS = ['GND', '3V3', '5V', 'SWD', 'TX', 'RX', 'SDA', 'SCL', 'MOSI', 'MISO', 'CLK', 'nRST', 'BOOT', 'PWM', 'A', 'B', 'DE', 'VBAT', 'IRQ'];
   var HEX = '0123456789ABCDEF';
 
@@ -372,6 +372,7 @@
   var LIFE = 950;
 
   function draw(now) {
+    if (!base.width || !base.height) return; // fenêtre de taille nulle (onglet masqué)
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
     ctx.globalAlpha = 1;

@@ -3,6 +3,8 @@
 Site statique, sans framework ni dépendance : HTML, CSS et JavaScript.
 Bilingue FR/EN, thème sombre/clair, et en fond un circuit imprimé en ASCII
 qui réagit au curseur (sonde) et aux clics (un signal parcourt les pistes).
+En bas de l'accueil, un compagnon en ASCII — chien robot, robot à chenilles ou
+drone FPV, au choix — obéit aux ordres donnés dans son menu (clic sur lui).
 
 ## Lancer en local
 
@@ -26,7 +28,7 @@ assets/js/i18n.js       version anglaise des textes de index.html + textes des s
 assets/js/main.js       navigation, thème, grille des projets, contact, coordonnées
 assets/js/ascii.js      dessins ASCII des projets (couvertures)
 assets/js/board.js      fond : circuit imprimé ASCII interactif (canvas)
-assets/js/robot.js      le chien robot de l'accueil et sa machine à états
+assets/js/robot.js      le compagnon de l'accueil (chien, robot ou drone) et sa machine à états
 assets/fonts/           JetBrains Mono + IBM Plex Sans, hébergées localement
 assets/img/             favicon, image de partage (og.png), médias des projets
 ```
@@ -73,10 +75,22 @@ Un envoi 100 % côté serveur demanderait un backend (le site est statique) :
 si le site est un jour hébergé sur un serveur à soi, un petit script (PHP ou
 Node) pourrait recevoir le formulaire à la place du `mailto:`.
 
-## À faire après déploiement
+## Le compagnon de l'accueil
 
-- Mettre l'URL **absolue** de `assets/img/og.png` dans la balise `og:image`
-  de `index.html` (certains réseaux ignorent les URL relatives).
+Un clic sur lui (ou sur « nom · fsm » en bas à droite) ouvre son menu : cinq
+ordres — suivre, attendre, s'asseoir, faire un tour, dormir — et le choix du
+personnage, mémorisé dans le navigateur. Tout est dans `assets/js/robot.js` :
+les dessins (`DOG_*`, `BOT_*`, `DRONE_*`), le tableau `KINDS` (nom, vitesse,
+libellés de la machine à états) et la boucle `tick`. Les répliques et les
+libellés des ordres sont dans `assets/js/i18n.js` (`petSay`, `petCmds`,
+`petAck`).
+
+## Déploiement
+
+Site statique : il suffit de copier `index.html`, `projet.html` et `assets/`
+à la racine du serveur web. La balise
+`og:image` de `index.html` pointe vers l'URL absolue du site : à adapter si le
+domaine change.
 
 ## Accessibilité
 

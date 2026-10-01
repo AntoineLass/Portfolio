@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Antoine Lassagne — systèmes embarqués</title>
-  <meta name="description" content="Portfolio d'Antoine Lassagne, élève-ingénieur EPITA (majeure GISTRE) et Master SESI à Sorbonne Université : systèmes embarqués, temps réel, FPGA.">
+  <title>Antoine Lassagne — logiciel embarqué &amp; bas niveau</title>
+  <meta name="description" content="Portfolio d'Antoine Lassagne, élève-ingénieur EPITA (majeure GISTRE) et Master SESI à Sorbonne Université : logiciel embarqué, bas niveau, temps réel.">
   <meta name="theme-color" content="#0b0b0a">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Antoine Lassagne — systèmes embarqués">
-  <meta property="og:description" content="Élève-ingénieur EPITA (GISTRE) & Master SESI Sorbonne. Robots, FPGA, drivers, PCB — et un fond en ASCII qui réagit à vos clics.">
-  <meta property="og:image" content="assets/img/og.png">
+  <meta property="og:title" content="Antoine Lassagne — logiciel embarqué &amp; bas niveau">
+  <meta property="og:description" content="Élève-ingénieur EPITA (GISTRE) & Master SESI Sorbonne. Drivers, temps réel, robots, FPGA — et un fond en ASCII qui réagit à vos clics.">
+  <meta property="og:image" content="https://www.alassagne.com/assets/img/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -67,12 +67,12 @@
       <div class="wrap">
         <p class="hero__kicker"><span class="prompt">$</span> whoami</p>
         <h1 class="hero__name" id="hero-name">Antoine Lassagne</h1>
-        <p class="hero__role" data-i18n="hero.role">Élève-ingénieur en <strong>systèmes embarqués &amp; temps réel</strong>, entre le code et le silicium.</p>
+        <p class="hero__role" data-i18n="hero.role">Élève-ingénieur en <strong>logiciel embarqué &amp; temps réel</strong> : le code d'abord, le matériel jamais loin.</p>
 
         <ol class="bootlog" id="bootlog" data-i18n-attr="aria-label:hero.bootlog" aria-label="Résumé">
           <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.0">Monté /epita/gistre — systèmes temps réel &amp; embarqués</span></li>
           <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.1">Monté /sorbonne/sesi — Master, double diplôme</span></li>
-          <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.2">Pilotes chargés : STM32 · RP2350 · FPGA · Linux · CUDA</span></li>
+          <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.2">Pilotes chargés : C · C++ · Linux · STM32 · FPGA · CUDA</span></li>
           <li><span class="st st--wait">[&nbsp;<b>WAIT</b>&nbsp;]</span><span data-i18n="boot.3">Recherche un stage de fin d'études · fév. → juin 2027</span></li>
         </ol>
 
@@ -82,12 +82,16 @@
         </div>
       </div>
 
-      <div class="ground" id="ground" aria-hidden="true">
-        <pre class="bubble" id="bubble"></pre>
-        <pre class="dog" id="dog"></pre>
-        <div class="ground__line"></div>
-        <span class="ground__hint" data-i18n="hero.hint">// cliquez n'importe où pour envoyer un signal</span>
-        <span class="ground__meta">nova-sm3 · fsm: <span class="fsm" id="fsm">IDLE</span></span>
+      <div class="ground" id="ground">
+        <pre class="bubble" id="bubble" aria-hidden="true"></pre>
+        <div class="pet" id="pet" aria-hidden="true">
+          <pre class="pet__sprite" id="pet-sprite"></pre>
+          <pre class="pet__shadow" id="pet-shadow"></pre>
+        </div>
+        <div class="ground__line" aria-hidden="true"></div>
+        <span class="ground__hint" data-i18n="hero.hint" aria-hidden="true">// un clic envoie un signal · cliquez sur lui pour lui donner un ordre</span>
+        <button class="ground__meta" type="button" id="pet-toggle" aria-expanded="false" aria-controls="pet-menu" data-i18n-attr="aria-label:pet.toggle" aria-label="Donner un ordre au compagnon"><span id="pet-name">nova-sm3</span> · fsm: <span class="fsm" id="fsm">IDLE</span> <span class="chev" aria-hidden="true">▾</span></button>
+        <div class="pet-menu" id="pet-menu" hidden></div>
       </div>
     </section>
 
@@ -102,8 +106,8 @@
 
         <div class="about">
           <div class="about__text">
-            <p data-i18n="about.p1">Je suis élève-ingénieur à l'EPITA, dans la majeure <strong>GISTRE</strong> — systèmes temps réel et embarqués — et en double diplôme avec le <strong>Master SESI de Sorbonne Université</strong>. Ce qui m'attire, c'est la frontière entre le logiciel et le matériel : un driver, une boucle de contrôle, un signal qui sort (ou pas) sur la bonne broche.</p>
-            <p data-i18n="about.p2">En stage chez <strong>Inpixal</strong>, j'ai conçu de bout en bout un banc de test automatisé pour des cartes FPGA de traitement vidéo : il a révélé deux bugs critiques du firmware dès sa mise en service. Depuis, j'ai piloté un robot quadrupède en temps réel, conçu un processeur en VHDL et routé une carte sous KiCad.</p>
+            <p data-i18n="about.p1">Je suis élève-ingénieur à l'EPITA, dans la majeure <strong>GISTRE</strong> — systèmes temps réel et embarqués — et en double diplôme avec le <strong>Master SESI de Sorbonne Université</strong>. Mon terrain, c'est le logiciel au plus près du matériel : drivers, firmware, boucles de contrôle temps réel. Je suis d'abord développeur — mais je sais lire un schéma, sortir l'oscilloscope et router une carte quand il le faut.</p>
+            <p data-i18n="about.p2">En stage chez <strong>Inpixal</strong>, j'ai conçu de bout en bout un banc de test automatisé pour des cartes FPGA de traitement vidéo : il a révélé deux bugs critiques du firmware dès sa mise en service. J'y ai aussi modernisé un driver PCIe Linux et tenu une contrainte temps réel de 40 ms par image. Côté projets : la commande temps réel d'un robot quadrupède, un shell POSIX, un allocateur mémoire — et, pour la casquette matériel, un processeur en VHDL et une carte routée sous KiCad.</p>
             <p data-i18n="about.p3">Cette année, je m'ouvre au calcul parallèle et aux accélérateurs : CUDA, synthèse haut niveau, architectures manycore. Et loin de l'oscilloscope, je monte et pilote des drones FPV, et je fais du modélisme — jusqu'au championnat de France.</p>
           </div>
 
@@ -116,11 +120,11 @@
               </div>
               <div class="spec__row">
                 <dt data-i18n="spec.k2">recherche</dt>
-                <dd data-i18n="spec.v2"><span class="led" aria-hidden="true"></span>Stage de fin d'études en systèmes embarqués<span class="sub">février → juin 2027</span></dd>
+                <dd data-i18n="spec.v2"><span class="led" aria-hidden="true"></span>Stage de fin d'études en logiciel embarqué / bas niveau<span class="sub">février → juin 2027</span></dd>
               </div>
               <div class="spec__row">
                 <dt data-i18n="spec.k3">terrain de jeu</dt>
-                <dd>STM32 · RP2350 · ESP32 · FPGA · Linux</dd>
+                <dd>C / C++ · Linux · STM32 · ESP32 · FPGA</dd>
               </div>
               <div class="spec__row">
                 <dt data-i18n="spec.k4">langues</dt>
@@ -167,10 +171,10 @@
             <span class="tl__node" aria-hidden="true"></span>
             <div class="tl__date"><span class="tl__kind" data-i18n="path.k.next">prochaine étape</span><span data-i18n="path.0.date">fév. → juin 2027</span></div>
             <div>
-              <h3 class="tl__title" data-i18n="path.0.title">Stage de fin d'études — systèmes embarqués</h3>
+              <h3 class="tl__title" data-i18n="path.0.title">Stage de fin d'études — logiciel embarqué &amp; bas niveau</h3>
               <p class="tl__org" data-i18n="path.0.org">Votre entreprise ?</p>
               <div class="tl__body">
-                <p data-i18n="path.0.body">Je cherche un stage de 5 mois à partir de février 2027, pour conclure mon double diplôme EPITA × Sorbonne. Embarqué, temps réel, FPGA ou accélérateurs : <a href="#contact">parlons-en →</a></p>
+                <p data-i18n="path.0.body">Je cherche un stage de 5 mois à partir de février 2027, pour conclure mon double diplôme EPITA × Sorbonne. Logiciel embarqué, bas niveau, temps réel ou accélérateurs (GPU, FPGA) : <a href="#contact">parlons-en →</a></p>
               </div>
             </div>
           </li>
@@ -261,38 +265,43 @@
           <div class="datasheet__head" aria-hidden="true"><span>pin</span><span data-i18n="skills.h1">fonction</span><span data-i18n="skills.h2">détail</span></div>
           <div class="ds-row">
             <span class="ds-row__pin">01</span>
-            <span class="ds-row__name" data-i18n="skills.1.k">Embarqué &amp; robotique</span>
-            <p class="ds-row__val" data-i18n="skills.1.v">C, C++ · STM32, ESP32, RP2350, Raspberry Pi · boucles de contrôle temps réel · machines à états</p>
+            <span class="ds-row__name" data-i18n="skills.1.k">Embarqué &amp; temps réel</span>
+            <p class="ds-row__val" data-i18n="skills.1.v">C, C++ · STM32, ESP32, Raspberry Pi · boucles de contrôle temps réel · machines à états · débogage sur cible <span class="note">(sonde ST-Link, GDB)</span></p>
           </div>
           <div class="ds-row">
             <span class="ds-row__pin">02</span>
-            <span class="ds-row__name" data-i18n="skills.2.k">FPGA &amp; électronique</span>
-            <p class="ds-row__val" data-i18n="skills.2.v">VHDL · FPGA (MAX10) · conception de PCB sous KiCad · soudure</p>
+            <span class="ds-row__name" data-i18n="skills.2.k">Bas niveau &amp; Linux</span>
+            <p class="ds-row__val" data-i18n="skills.2.v">Drivers Linux (PCIe) · multithreading · gestion mémoire · processus et shell POSIX · Lua/LuaJIT + FFI · assembleur x86</p>
           </div>
           <div class="ds-row">
             <span class="ds-row__pin">03</span>
-            <span class="ds-row__name" data-i18n="skills.3.k">Bas niveau &amp; Linux</span>
-            <p class="ds-row__val" data-i18n="skills.3.v">Drivers (PCIe) · multithreading · temps réel · Lua/LuaJIT + FFI · assembleur x86</p>
+            <span class="ds-row__name" data-i18n="skills.3.k">GPU &amp; calcul parallèle</span>
+            <p class="ds-row__val" data-i18n="skills.3.v">CUDA <span class="note">(autodidacte, projet en cours)</span> · Nsight Systems · modèles de programmation parallèle</p>
           </div>
           <div class="ds-row">
             <span class="ds-row__pin">04</span>
             <span class="ds-row__name" data-i18n="skills.4.k">Protocoles &amp; signal</span>
-            <p class="ds-row__val">SPI · RS-485 · UDP/Ethernet · FFT · PID</p>
+            <p class="ds-row__val">SPI · I2C · UART · RS-485 · UDP/Ethernet · FFT · PID</p>
           </div>
           <div class="ds-row">
             <span class="ds-row__pin">05</span>
-            <span class="ds-row__name" data-i18n="skills.5.k">GPU &amp; calcul parallèle</span>
-            <p class="ds-row__val" data-i18n="skills.5.v">CUDA <span class="note">(autodidacte, projet en cours)</span> · Nsight Systems · modèles de programmation parallèle</p>
+            <span class="ds-row__name" data-i18n="skills.5.k">Test &amp; outils</span>
+            <p class="ds-row__val" data-i18n="skills.5.v">Bancs de test automatisés · tests de non-régression · Git · Bash · Python (scripting) · documentation technique</p>
           </div>
           <div class="ds-row">
             <span class="ds-row__pin">06</span>
-            <span class="ds-row__name" data-i18n="skills.6.k">Logiciel &amp; outils</span>
-            <p class="ds-row__val" data-i18n="skills.6.v">Git · Bash · Python (scripting) · Java (Quarkus, Hibernate, Kafka) · documentation technique</p>
+            <span class="ds-row__name" data-i18n="skills.6.k">FPGA &amp; électronique</span>
+            <p class="ds-row__val" data-i18n="skills.6.v">VHDL · FPGA (MAX10) · conception de PCB sous KiCad · soudure · impression 3D</p>
           </div>
           <div class="ds-row">
             <span class="ds-row__pin">07</span>
-            <span class="ds-row__name" data-i18n="skills.7.k">Langues</span>
-            <p class="ds-row__val" data-i18n="skills.7.v">Français (langue maternelle) · Anglais B2-C1 <span class="note">(TOEIC 890/990)</span></p>
+            <span class="ds-row__name" data-i18n="skills.7.k">Logiciel applicatif</span>
+            <p class="ds-row__val">Java (Spring, Quarkus, Hibernate, Kafka) · SQL</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">08</span>
+            <span class="ds-row__name" data-i18n="skills.8.k">Langues</span>
+            <p class="ds-row__val" data-i18n="skills.8.v">Français (langue maternelle) · Anglais B2-C1 <span class="note">(TOEIC 890/990)</span></p>
           </div>
         </div>
       </div>
