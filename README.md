@@ -77,7 +77,6 @@ Node) pourrait recevoir le formulaire à la place du `mailto:`.
 
 - Mettre l'URL **absolue** de `assets/img/og.png` dans la balise `og:image`
   de `index.html` (certains réseaux ignorent les URL relatives).
-- Renseigner `linkedin` dans `window.SITE`.
 
 ## Accessibilité
 

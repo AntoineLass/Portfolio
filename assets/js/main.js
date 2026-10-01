@@ -7,7 +7,7 @@
 window.SITE = {
   email: ['antoine.lassagne', 'outlook.com'],
   github: 'https://github.com/AntoineLass',
-  linkedin: '' // ex. 'https://www.linkedin.com/in/…' — laissé vide, le lien reste masqué
+  linkedin: 'https://www.linkedin.com/in/antoine-lassagne-345076334/'
 };
 
 (function () {
