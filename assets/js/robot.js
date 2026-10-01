@@ -598,9 +598,55 @@
     pointer.inHero = false;
   });
 
+  /* ---------- easter egg : le monde 3D (nova.html) ---------- */
+
+  // clic droit ou appui long sur lui, ou le code Konami au clavier
+  var leaving = false, pressTimer = 0;
+
+  function secret() {
+    if (leaving) return;
+    leaving = true;
+    clearTimeout(pressTimer);
+    closeMenu();
+    if (window.BOARD) {
+      var r = pet.getBoundingClientRect();
+      window.BOARD.signalAt(r.left + r.width / 2, r.top + 6);
+    }
+    S.napping = false;
+    S.state = '';
+    setState('trick');
+    say(T('petSecret'), 1500);
+    var en = window.I18N && window.I18N.lang === 'en';
+    setTimeout(function () { window.location.href = 'nova.html' + (en ? '?lang=en' : ''); }, 750);
+  }
+
+  pet.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+    secret();
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (type) {
+    pet.addEventListener(type, function () { clearTimeout(pressTimer); });
+  });
+
+  var KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+  var konami = 0;
+  window.addEventListener('keydown', function (e) {
+    // e.key pour les lettres : le code doit marcher en AZERTY comme en QWERTY
+    var code = e.code || '';
+    var k = code.indexOf('Arrow') === 0 ? code : 'Key' + String(e.key).toUpperCase();
+    konami = k === KONAMI[konami] ? konami + 1 : (k === KONAMI[0] ? 1 : 0);
+    if (konami === KONAMI.length) { konami = 0; secret(); }
+  });
+
+  // retour arrière du navigateur : la page est restaurée telle quelle
+  window.addEventListener('pageshow', function () { leaving = false; });
+
   // clic sur lui : il réagit et ouvre le menu des ordres
   pet.addEventListener('pointerdown', function (e) {
     e.stopPropagation();
+    if (e.button === 2 || leaving) return;   // clic droit : voir l'easter egg
+    clearTimeout(pressTimer);
+    if (e.pointerType === 'touch') pressTimer = setTimeout(secret, 750);
     if (window.BOARD) {
       var r = pet.getBoundingClientRect();
       window.BOARD.signalAt(r.left + r.width * 0.2, r.top + 6);

@@ -176,7 +176,8 @@ window.I18N = (function () {
           'IK : ok',
           'SPI : 0xA5 → 0x5A',
           'je cherche un stage, moi aussi',
-          'sudo assis'
+          'sudo assis',
+          'psst : clic droit ou appui long'
         ],
         robot: [
           'bip boup',
@@ -202,7 +203,8 @@ window.I18N = (function () {
       },
       petIrq: ['IRQ !', 'irq reçue', 'interruption ⚡', 'ISR ok'],
       petWake: { dog: '!? je ne dormais pas.', robot: '!? veille interrompue.', drone: '!? réarmement.' },
-      petZzz: { dog: 'z z Z', robot: 'z z Z', drone: '· · ·' }
+      petZzz: { dog: 'z z Z', robot: 'z z Z', drone: '· · ·' },
+      petSecret: 'accès root accordé ⚡'
     },
     en: {
       back: 'cd ../projects',
@@ -261,7 +263,8 @@ window.I18N = (function () {
           'IK: ok',
           'SPI: 0xA5 → 0x5A',
           'looking for an internship too',
-          'sudo sit'
+          'sudo sit',
+          'psst: right-click or long-press'
         ],
         robot: [
           'beep boop',
@@ -287,7 +290,8 @@ window.I18N = (function () {
       },
       petIrq: ['IRQ!', 'irq received', 'interrupt ⚡', 'ISR ok'],
       petWake: { dog: '!? I wasn\'t sleeping.', robot: '!? standby interrupted.', drone: '!? re-arming.' },
-      petZzz: { dog: 'z z Z', robot: 'z z Z', drone: '· · ·' }
+      petZzz: { dog: 'z z Z', robot: 'z z Z', drone: '· · ·' },
+      petSecret: 'root access granted ⚡'
     }
   };
 

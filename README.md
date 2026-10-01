@@ -85,9 +85,17 @@ libellés de la machine à états) et la boucle `tick`. Les répliques et les
 libellés des ordres sont dans `assets/js/i18n.js` (`petSay`, `petCmds`,
 `petAck`).
 
+## Easter egg
+
+Un clic droit sur le compagnon (appui long sur mobile, ou le code Konami au
+clavier) ouvre `nova.html` : un petit monde 3D rendu en caractères ASCII, où
+l'on pilote un robot quadrupède. Tout le moteur tient dans `assets/js/game.js`
+(tampon de caractères avec profondeur, projection en perspective, physique et
+règles du jeu), sans bibliothèque.
+
 ## Déploiement
 
-Site statique : il suffit de copier `index.html`, `projet.html` et `assets/`
+Site statique : il suffit de copier `index.html`, `projet.html`, `nova.html` et `assets/`
 à la racine du serveur web. La balise
 `og:image` de `index.html` pointe vers l'URL absolue du site : à adapter si le
 domaine change.

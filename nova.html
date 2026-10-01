@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NOVA//RUN — Antoine Lassagne</title>
+  <meta name="description" content="Easter egg du portfolio d'Antoine Lassagne : un petit monde 3D en ASCII et un robot quadrupède à piloter.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0b0a">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+    #game {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: crosshair;
+    }
+    .game-back {
+      position: fixed;
+      top: max(10px, env(safe-area-inset-top));
+      left: max(12px, env(safe-area-inset-left));
+      z-index: 2;
+      padding: 6px 10px;
+      font: 400 12px var(--mono);
+      color: var(--fg-2);
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--line-2);
+      border-radius: var(--radius);
+    }
+    .game-back:hover {
+      color: var(--fg);
+      border-color: var(--fg-3);
+    }
+    .game-back b {
+      font-weight: 400;
+      color: var(--accent);
+    }
+    noscript p {
+      position: fixed;
+      inset: 40% 0 auto;
+      margin: 0;
+      font: 400 14px var(--mono);
+      text-align: center;
+      color: var(--fg-2);
+    }
+  </style>
+  <script>
+    /* thème + langue repris du portfolio */
+    (function () {
+      var d = document.documentElement;
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') d.dataset.theme = t;
+      } catch (e) {}
+      var l = null;
+      try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang'); } catch (e) {}
+      if (l !== 'fr' && l !== 'en') l = /^fr\b/i.test(navigator.language || 'fr') ? 'fr' : 'en';
+      d.dataset.lang = l;
+      d.lang = l;
+    })();
+  </script>
+</head>
+<body>
+  <a class="game-back" id="back" href="index.html"><b>←</b> cd ~/portfolio</a>
+  <canvas id="game" role="img" aria-label="NOVA//RUN : mini-jeu en ASCII, un robot quadrupède à piloter au clavier"></canvas>
+  <noscript><p>Ce mini-jeu a besoin de JavaScript.</p></noscript>
+  <script>
+    (function () {
+      var en = document.documentElement.dataset.lang === 'en';
+      var back = document.getElementById('back');
+      if (en) {
+        back.href = 'index.html?lang=en';
+        document.getElementById('game').setAttribute('aria-label', 'NOVA//RUN: an ASCII mini-game, a quadruped robot to drive with the keyboard');
+      }
+    })();
+  </script>
+  <script src="assets/js/game.js" defer></script>
+</body>
+</html>
