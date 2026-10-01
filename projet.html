@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projet — Antoine Lassagne</title>
+  <meta name="description" content="Projet d'Antoine Lassagne, élève-ingénieur en systèmes embarqués.">
+  <meta name="theme-color" content="#0b0b0a">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') d.dataset.theme = t;
+      } catch (e) {}
+      var l = null;
+      try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang'); } catch (e) {}
+      if (l !== 'fr' && l !== 'en') l = /^fr\b/i.test(navigator.language || 'fr') ? 'fr' : 'en';
+      d.dataset.lang = l;
+      if (l !== 'fr') {
+        d.classList.add('i18n-pending');
+        setTimeout(function () { d.classList.remove('i18n-pending'); }, 1500);
+      }
+    })();
+  </script>
+</head>
+<body data-title-key="none">
+  <a class="skip" href="#main" data-i18n="skip">Aller au contenu</a>
+  <canvas id="board" aria-hidden="true"></canvas>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="Antoine Lassagne">al<span class="dim">@gistre:~$</span><span class="caret" aria-hidden="true"></span></a>
+      <button class="tool nav__burger" type="button" aria-expanded="false" aria-controls="nav-menu" data-i18n-attr="aria-label:nav.menu" aria-label="Menu">≡ menu</button>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__links">
+          <li><a href="index.html#a-propos" data-i18n="nav.about">à-propos</a></li>
+          <li><a href="index.html#projets" class="is-active" data-i18n="nav.projects">projets</a></li>
+          <li><a href="index.html#parcours" data-i18n="nav.path">parcours</a></li>
+          <li><a href="index.html#contact" data-i18n="nav.contact">contact</a></li>
+        </ul>
+        <div class="nav__tools">
+          <button class="tool" type="button" id="lang-toggle" data-i18n-attr="aria-label:nav.lang" aria-label="Switch to English">
+            <span data-on="true" data-lang-label="fr">FR</span><span class="sep">/</span><span data-on="false" data-lang-label="en">EN</span>
+          </button>
+          <button class="tool" type="button" id="theme-toggle" data-i18n-attr="aria-label:nav.theme" aria-label="Changer de thème">
+            <span aria-hidden="true" id="theme-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="project wrap" id="project" aria-live="polite"></article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span id="year">2026</span> Antoine Lassagne</span>
+      <span data-i18n="footer.made">fait main · HTML, CSS &amp; JS sans framework · <a href="https://github.com/AntoineLass/Portfolio" target="_blank" rel="noopener">code source</a></span>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox">
+    <img alt="" id="lightbox-img">
+    <div class="lightbox__bar">
+      <span id="lightbox-cap"></span>
+      <span>
+        <button type="button" id="lightbox-prev" aria-label="←">←</button>
+        <button type="button" id="lightbox-next" aria-label="→">→</button>
+        <button type="button" id="lightbox-close">✕</button>
+      </span>
+    </div>
+  </dialog>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/projects.js" defer></script>
+  <script src="assets/js/ascii.js" defer></script>
+  <script src="assets/js/board.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/project-page.js" defer></script>
+</body>
+</html>

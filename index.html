@@ -1,192 +1,384 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/powerglitch@latest/dist/powerglitch.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antoine Lassagne</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Antoine Lassagne — systèmes embarqués</title>
+  <meta name="description" content="Portfolio d'Antoine Lassagne, élève-ingénieur EPITA (majeure GISTRE) et Master SESI à Sorbonne Université : systèmes embarqués, temps réel, FPGA.">
+  <meta name="theme-color" content="#0b0b0a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Antoine Lassagne — systèmes embarqués">
+  <meta property="og:description" content="Élève-ingénieur EPITA (GISTRE) & Master SESI Sorbonne. Robots, FPGA, drivers, PCB — et un fond en ASCII qui réagit à vos clics.">
+  <meta property="og:image" content="assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-extrabold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    /* thème + langue appliqués avant le rendu pour éviter un flash */
+    (function () {
+      var d = document.documentElement;
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') d.dataset.theme = t;
+      } catch (e) {}
+      var l = null;
+      try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang'); } catch (e) {}
+      if (l !== 'fr' && l !== 'en') l = /^fr\b/i.test(navigator.language || 'fr') ? 'fr' : 'en';
+      d.dataset.lang = l;
+      if (l !== 'fr') {
+        d.classList.add('i18n-pending');
+        setTimeout(function () { d.classList.remove('i18n-pending'); }, 1500);
+      }
+    })();
+  </script>
 </head>
 <body>
-    <div class="blob"></div>
-    <header>
-        <nav id="navbar">
-            <a id="navbar1" href="#home">Home</a>
-            <a id="navbar2" href="#projects">Projects</a>
-            <a id="navbar3" href="#contact">Contact</a>
-        </nav>
-    </header>
+  <a class="skip" href="#main" data-i18n="skip">Aller au contenu</a>
+  <canvas id="board" aria-hidden="true"></canvas>
 
-    <main>
-        <section id="home">
-            <div class="centered">
-                <h1 class='glitch' id="name">Antoine Lassagne</h1>
-                <p>Welcome</p>
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="#top" aria-label="Antoine Lassagne">al<span class="dim">@gistre:~$</span><span class="caret" aria-hidden="true"></span></a>
+      <button class="tool nav__burger" type="button" aria-expanded="false" aria-controls="nav-menu" data-i18n-attr="aria-label:nav.menu" aria-label="Menu">≡ menu</button>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__links">
+          <li><a href="#a-propos" data-i18n="nav.about">à-propos</a></li>
+          <li><a href="#projets" data-i18n="nav.projects">projets</a></li>
+          <li><a href="#parcours" data-i18n="nav.path">parcours</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">contact</a></li>
+        </ul>
+        <div class="nav__tools">
+          <button class="tool" type="button" id="lang-toggle" data-i18n-attr="aria-label:nav.lang" aria-label="Switch to English">
+            <span data-on="true" data-lang-label="fr">FR</span><span class="sep">/</span><span data-on="false" data-lang-label="en">EN</span>
+          </button>
+          <button class="tool" type="button" id="theme-toggle" data-i18n-attr="aria-label:nav.theme" aria-label="Changer de thème">
+            <span aria-hidden="true" id="theme-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 0x00 — accueil -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <p class="hero__kicker"><span class="prompt">$</span> whoami</p>
+        <h1 class="hero__name" id="hero-name">Antoine Lassagne</h1>
+        <p class="hero__role" data-i18n="hero.role">Élève-ingénieur en <strong>systèmes embarqués &amp; temps réel</strong>, entre le code et le silicium.</p>
+
+        <ol class="bootlog" id="bootlog" data-i18n-attr="aria-label:hero.bootlog" aria-label="Résumé">
+          <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.0">Monté /epita/gistre — systèmes temps réel &amp; embarqués</span></li>
+          <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.1">Monté /sorbonne/sesi — Master, double diplôme</span></li>
+          <li><span class="st">[&nbsp;&nbsp;<b>OK</b>&nbsp;&nbsp;]</span><span data-i18n="boot.2">Pilotes chargés : STM32 · RP2350 · FPGA · Linux · CUDA</span></li>
+          <li><span class="st st--wait">[&nbsp;<b>WAIT</b>&nbsp;]</span><span data-i18n="boot.3">Recherche un stage de fin d'études · fév. → juin 2027</span></li>
+        </ol>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#projets"><span data-i18n="hero.cta1">voir les projets</span> <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn" href="#contact"><span data-i18n="hero.cta2">me contacter</span></a>
+        </div>
+      </div>
+
+      <div class="ground" id="ground" aria-hidden="true">
+        <pre class="bubble" id="bubble"></pre>
+        <pre class="dog" id="dog"></pre>
+        <div class="ground__line"></div>
+        <span class="ground__hint" data-i18n="hero.hint">// cliquez n'importe où pour envoyer un signal</span>
+        <span class="ground__meta">nova-sm3 · fsm: <span class="fsm" id="fsm">IDLE</span></span>
+      </div>
+    </section>
+
+    <!-- 0x01 — à propos -->
+    <section class="section" id="a-propos">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__num">0x01</span>
+          <h2 class="section__title" data-i18n="about.title">À propos</h2>
+          <span class="section__rule"></span>
+        </div>
+
+        <div class="about">
+          <div class="about__text">
+            <p data-i18n="about.p1">Je suis élève-ingénieur à l'EPITA, dans la majeure <strong>GISTRE</strong> — systèmes temps réel et embarqués — et en double diplôme avec le <strong>Master SESI de Sorbonne Université</strong>. Ce qui m'attire, c'est la frontière entre le logiciel et le matériel : un driver, une boucle de contrôle, un signal qui sort (ou pas) sur la bonne broche.</p>
+            <p data-i18n="about.p2">En stage chez <strong>Inpixal</strong>, j'ai conçu de bout en bout un banc de test automatisé pour des cartes FPGA de traitement vidéo : il a révélé deux bugs critiques du firmware dès sa mise en service. Depuis, j'ai piloté un robot quadrupède en temps réel, conçu un processeur en VHDL et routé une carte sous KiCad.</p>
+            <p data-i18n="about.p3">Cette année, je m'ouvre au calcul parallèle et aux accélérateurs : CUDA, synthèse haut niveau, architectures manycore. Et loin de l'oscilloscope, je monte et pilote des drones FPV, et je fais du modélisme — jusqu'au championnat de France.</p>
+          </div>
+
+          <aside class="spec" data-i18n-attr="aria-label:about.spec" aria-label="Fiche résumé">
+            <div class="spec__head"><span data-i18n="about.specTitle">fiche technique</span><b>AL-2027</b></div>
+            <dl>
+              <div class="spec__row">
+                <dt data-i18n="spec.k1">formation</dt>
+                <dd data-i18n="spec.v1">EPITA — ingénieur, majeure GISTRE<span class="sub">Sorbonne Université — Master SESI · 2026 → 2027</span></dd>
+              </div>
+              <div class="spec__row">
+                <dt data-i18n="spec.k2">recherche</dt>
+                <dd data-i18n="spec.v2"><span class="led" aria-hidden="true"></span>Stage de fin d'études en systèmes embarqués<span class="sub">février → juin 2027</span></dd>
+              </div>
+              <div class="spec__row">
+                <dt data-i18n="spec.k3">terrain de jeu</dt>
+                <dd>STM32 · RP2350 · ESP32 · FPGA · Linux</dd>
+              </div>
+              <div class="spec__row">
+                <dt data-i18n="spec.k4">langues</dt>
+                <dd data-i18n="spec.v4">Français (natif) · Anglais (B2-C1)<span class="sub">TOEIC 890/990 · semestre en Australie</span></dd>
+              </div>
+              <div class="spec__row">
+                <dt data-i18n="spec.k5">hors code</dt>
+                <dd data-i18n="spec.v5">Drones FPV · modélisme · électronique</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 0x02 — projets -->
+    <section class="section" id="projets">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__num">0x02</span>
+          <h2 class="section__title" data-i18n="projects.title">Projets</h2>
+          <span class="section__rule"></span>
+        </div>
+        <p class="section__lead" data-i18n="projects.lead">Du robot quadrupède au shell POSIX : une sélection de projets d'école et personnels. Chaque carte ouvre une page dédiée.</p>
+
+        <div class="filters" id="filters" role="group" data-i18n-attr="aria-label:projects.filter" aria-label="Filtrer les projets"></div>
+        <div class="grid grid--featured" id="grid-featured"></div>
+        <div class="grid" id="grid-rest"></div>
+        <noscript><p class="photo-note">Activez JavaScript pour afficher les projets.</p></noscript>
+      </div>
+    </section>
+
+    <!-- 0x03 — parcours -->
+    <section class="section" id="parcours">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__num">0x03</span>
+          <h2 class="section__title" data-i18n="path.title">Parcours</h2>
+          <span class="section__rule"></span>
+        </div>
+
+        <ol class="timeline">
+          <li class="tl tl--next">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div class="tl__date"><span class="tl__kind" data-i18n="path.k.next">prochaine étape</span><span data-i18n="path.0.date">fév. → juin 2027</span></div>
+            <div>
+              <h3 class="tl__title" data-i18n="path.0.title">Stage de fin d'études — systèmes embarqués</h3>
+              <p class="tl__org" data-i18n="path.0.org">Votre entreprise ?</p>
+              <div class="tl__body">
+                <p data-i18n="path.0.body">Je cherche un stage de 5 mois à partir de février 2027, pour conclure mon double diplôme EPITA × Sorbonne. Embarqué, temps réel, FPGA ou accélérateurs : <a href="#contact">parlons-en →</a></p>
+              </div>
             </div>
-        </section>
+          </li>
 
-        <section id="resume">
-            <h2>About me</h2>
-            <p id="rt" class="resume-text">I'm a computer engineering student at EPITA. Passionate about technology, I'm developing my skills in a variety of areas, from C and full languages to project management and teamwork. I was also lucky enough to take part in an exchange program at Murdoch University in Australia, which reinforced my open-mindedness and IT skills.
-              I'm currently involved in my school's community life as president of Labbaye, where we organize events for students, and in the communications staff, where I help organize events and create content. My professional experience, particularly as a multi-skilled sales assistant, has strengthened my sense of service and autonomy.
-            </p>
-        </section>
-
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="swiper-container">
-              <div class="swiper-wrapper">
-                <!-- Projet 1 -->
-                <div class="swiper-slide project-item">
-                  <img src="WebySite.png" alt="Project 1" class="project-image" />
-                  <div class="project-content">
-                    <h3>Piquette</h3>
-                    <p class="project-summary">Piquette is an adventure game. It was made in the context of the first year at EPITA. We were in group of 5 students.</p>
-                    <div class="project-links">
-                      <a href="https://briossant.com/piquette/" target="_blank">Website</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Projet 2 -->
-                <div class="swiper-slide project-item">
-                  <img src="sudoku.gif" alt="Project 2" class="project-image" />
-                  <div class="project-content">
-                    <h3>BAME-OCR</h3>
-                    <p class="project-summary">An optical character recogniser and sudoku solver app. Made in the context of the second year at EPITA. We were 4 students and we got 4 months to build it from zero!</p>
-                    <div class="project-links">
-                      <a href="https://briossant.com/BAME-OCR/" target="_blank">GitHub</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Projet 3 -->
-                <div class="swiper-slide project-item">
-                  <img src="portscreen.png" alt="Project 3" class="project-image" />
-                  <div class="project-content">
-                    <h3>This website</h3>
-                    <p class="project-summary">I made this website on my free time. I learn a lot of in web development in general with this project.</p>
-                    <div class="project-links">
-                      <a href="https://github.com/AntoineLass/Portfolio" target="_blank">GitHub</a>
-                    </div>
-                  </div>
-                </div>
+          <li class="tl">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div class="tl__date"><span class="tl__kind" data-i18n="path.k.edu">formation</span>2026 → 2027</div>
+            <div>
+              <h3 class="tl__title" data-i18n="path.1.title">Master SESI — Systèmes Électroniques et Systèmes Informatiques</h3>
+              <p class="tl__org" data-i18n="path.1.org">Sorbonne Université · Paris · double diplôme avec l'EPITA</p>
+              <div class="tl__body">
+                <p data-i18n="path.1.body">Unités choisies : <strong>PACC</strong> (parallélisme et accélérateurs : CUDA/OpenCL, SIMD, MPI), <strong>PBD-HLS</strong> (co-conception matériel/logiciel et synthèse haut niveau, avec un CNN LeNet sur Zynq), <strong>MASSOC</strong> (modélisation et simulation de SoC, SystemC), <strong>SMC</strong> (architectures manycore et OS associé) et <strong>HOTOP</strong> (séminaires de recherche : accélérateurs pour l'IA, sécurité matérielle…).</p>
               </div>
-              <!-- Pagination and navigation -->
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-              <div class="swiper-pagination"></div>
             </div>
-          </section>
+          </li>
 
-<!--        <section id="interest">
-            <h2>Interest</h2>
-        </section>-->
-
-        <section id="contact">
-          <h2>Contact</h2>
-          <form id="contact-form" action="https://formspree.io/f/xlddakaa" method="POST">
-              <div class="form-group">
-                  <label for="name">Name :</label>
-                  <input type="text" id="name" name="name" placeholder="Your name" required>
+          <li class="tl tl--work">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div class="tl__date"><span class="tl__kind" data-i18n="path.k.work">expérience</span><span data-i18n="path.2.date">sept. 2025 → janv. 2026</span></div>
+            <div>
+              <h3 class="tl__title" data-i18n="path.2.title">Stagiaire ingénieur R&amp;D — systèmes embarqués / validation FPGA</h3>
+              <p class="tl__org" data-i18n="path.2.org">Inpixal · Rennes · 5 mois</p>
+              <div class="tl__body">
+                <p data-i18n="path.2.intro">PME spécialisée dans le traitement d'image temps réel embarqué. Seul développeur sur le projet, en lien hebdomadaire avec le chef de projet et le développeur hardware.</p>
+                <ul>
+                  <li data-i18n="path.2.b1">Conception et livraison <strong>de bout en bout</strong> d'un banc de test automatisé pour cartes FPGA de traitement vidéo, simulant des caméras infrarouges de drone : <strong>2 bugs critiques du firmware détectés dès le déploiement</strong>.</li>
+                  <li data-i18n="path.2.b2">Reproduire un bug terrain prenait environ 4 jours avant le banc ; les tests de non-régression sont désormais centralisés et systématiques.</li>
+                  <li data-i18n="path.2.b3">Modernisation d'un <strong>driver PCIe Linux</strong> (carte Terasic) pour les distributions Ubuntu récentes.</li>
+                  <li data-i18n="path.2.b4">Synchronisation temps réel PC / carte d'interface / carte testée sous contrainte de <strong>~40 ms par image</strong> : comparaison de 3 architectures d'envoi, implémentation multi-buffers.</li>
+                  <li data-i18n="path.2.b5">Asservissement d'un banc vibrant : Raspberry Pi + IMU en SPI, mesure de fréquence par FFT, régulation PID, moteur piloté en RS-485.</li>
+                </ul>
+                <ul class="tags">
+                  <li>Lua / LuaJIT + FFI</li><li>C</li><li>Linux</li><li>PCIe</li><li>FPGA</li><li>RS-485</li><li>PID</li>
+                </ul>
               </div>
-              <div class="form-group">
-                  <label for="email">Email :</label>
-                  <input type="email" id="email" name="email" placeholder="Your email" required>
+            </div>
+          </li>
+
+          <li class="tl">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div class="tl__date"><span class="tl__kind" data-i18n="path.k.asso">associatif</span>2024 → 2025</div>
+            <div>
+              <h3 class="tl__title" data-i18n="path.3.title">Président de l'association Labbaye</h3>
+              <p class="tl__org">EPITA · Rennes</p>
+              <div class="tl__body">
+                <p data-i18n="path.3.body">Animation du campus : une dizaine d'événements et de tournois à thème sur l'année, gestion du bureau (5 membres actifs), du budget et de la communication. En parallèle, membre du staff communication de l'école : journées portes ouvertes, salons, vidéos.</p>
               </div>
-              <div class="form-group">
-                  <label for="message">Message :</label>
-                  <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea>
+            </div>
+          </li>
+
+          <li class="tl">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div class="tl__date"><span class="tl__kind" data-i18n="path.k.edu">formation</span><span data-i18n="path.4.date">fév. → juil. 2024</span></div>
+            <div>
+              <h3 class="tl__title" data-i18n="path.4.title">Semestre d'échange — informatique &amp; mathématiques</h3>
+              <p class="tl__org" data-i18n="path.4.org">Murdoch University · Perth, Australie</p>
+              <div class="tl__body">
+                <p data-i18n="path.4.body">Un semestre entièrement en anglais, à l'autre bout du monde : autonomie et anglais technique au quotidien.</p>
               </div>
-              <!--<button type="submit">Envoyer</button>-->
-              <button class="button" type="send">
-                <div class="outline"></div>
-                <div class="state state--default">
-                  <div class="icon">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g style="filter: url(#shadow)">
-                        <path
-                          d="M14.2199 21.63C13.0399 21.63 11.3699 20.8 10.0499 16.83L9.32988 14.67L7.16988 13.95C3.20988 12.63 2.37988 10.96 2.37988 9.78001C2.37988 8.61001 3.20988 6.93001 7.16988 5.60001L15.6599 2.77001C17.7799 2.06001 19.5499 2.27001 20.6399 3.35001C21.7299 4.43001 21.9399 6.21001 21.2299 8.33001L18.3999 16.82C17.0699 20.8 15.3999 21.63 14.2199 21.63ZM7.63988 7.03001C4.85988 7.96001 3.86988 9.06001 3.86988 9.78001C3.86988 10.5 4.85988 11.6 7.63988 12.52L10.1599 13.36C10.3799 13.43 10.5599 13.61 10.6299 13.83L11.4699 16.35C12.3899 19.13 13.4999 20.12 14.2199 20.12C14.9399 20.12 16.0399 19.13 16.9699 16.35L19.7999 7.86001C20.3099 6.32001 20.2199 5.06001 19.5699 4.41001C18.9199 3.76001 17.6599 3.68001 16.1299 4.19001L7.63988 7.03001Z"
-                          fill="currentColor"
-                        ></path>
-                        <path
-                          d="M10.11 14.4C9.92005 14.4 9.73005 14.33 9.58005 14.18C9.29005 13.89 9.29005 13.41 9.58005 13.12L13.16 9.53C13.45 9.24 13.93 9.24 14.22 9.53C14.51 9.82 14.51 10.3 14.22 10.59L10.64 14.18C10.5 14.33 10.3 14.4 10.11 14.4Z"
-                          fill="currentColor"
-                        ></path>
-                      </g>
-                      <defs>
-                        <filter id="shadow">
-                          <fedropshadow
-                            dx="0"
-                            dy="1"
-                            stdDeviation="0.6"
-                            flood-opacity="0.5"
-                          ></fedropshadow>
-                        </filter>
-                      </defs>
-                    </svg>
-                  </div>
-                  <p>
-                    <span style="--i:0">S</span>
-                    <span style="--i:1">e</span>
-                    <span style="--i:2">n</span>
-                    <span style="--i:3">d</span>
-                    <span style="--i:4">M</span>
-                    <span style="--i:5">e</span>
-                    <span style="--i:6">s</span>
-                    <span style="--i:7">s</span>
-                    <span style="--i:8">a</span>
-                    <span style="--i:9">g</span>
-                    <span style="--i:10">e</span>
-                  </p>
-                </div>
-                <div class="state state--sent">
-                  <div class="icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      height="1em"
-                      width="1em"
-                      stroke-width="0.5px"
-                      stroke="black"
-                    >
-                      <g style="filter: url(#shadow)">
-                        <path
-                          fill="currentColor"
-                          d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
-                        ></path>
-                        <path
-                          fill="currentColor"
-                          d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <p>
-                    <span style="--i:5">S</span>
-                    <span style="--i:6">e</span>
-                    <span style="--i:7">n</span>
-                    <span style="--i:8">t</span>
-                  </p>
-                </div>
-              </button>
+            </div>
+          </li>
 
-          </form>
-      </section>
-    </main>
+          <li class="tl">
+            <span class="tl__node" aria-hidden="true"></span>
+            <div class="tl__date"><span class="tl__kind" data-i18n="path.k.edu">formation</span>2022 → 2027</div>
+            <div>
+              <h3 class="tl__title" data-i18n="path.5.title">Cycle ingénieur — majeure GISTRE</h3>
+              <p class="tl__org" data-i18n="path.5.org">EPITA · école d'ingénieurs en informatique</p>
+              <div class="tl__body">
+                <p data-i18n="path.5.body">Génie Informatique des Systèmes Temps Réel et Embarqués. Cours clés : microcontrôleurs (STM32, ESP32, débogage sur cible avec sonde ST-Link et GDB), VHDL, KiCad, dérisquage, séquences de démarrage, noyaux et OS.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
 
+    <!-- 0x04 — compétences -->
+    <section class="section" id="competences">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__num">0x04</span>
+          <h2 class="section__title" data-i18n="skills.title">Compétences</h2>
+          <span class="section__rule"></span>
+        </div>
 
-    <footer class='glitch'>
-        <p>&copy; Antoine Lassagne</p>
-    </footer>
-    <script src="script.js"></script>
-    <script src="server.js"></script>
+        <div class="datasheet">
+          <div class="datasheet__head" aria-hidden="true"><span>pin</span><span data-i18n="skills.h1">fonction</span><span data-i18n="skills.h2">détail</span></div>
+          <div class="ds-row">
+            <span class="ds-row__pin">01</span>
+            <span class="ds-row__name" data-i18n="skills.1.k">Embarqué &amp; robotique</span>
+            <p class="ds-row__val" data-i18n="skills.1.v">C, C++ · STM32, ESP32, RP2350, Raspberry Pi · boucles de contrôle temps réel · machines à états</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">02</span>
+            <span class="ds-row__name" data-i18n="skills.2.k">FPGA &amp; électronique</span>
+            <p class="ds-row__val" data-i18n="skills.2.v">VHDL · FPGA (MAX10) · conception de PCB sous KiCad · soudure</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">03</span>
+            <span class="ds-row__name" data-i18n="skills.3.k">Bas niveau &amp; Linux</span>
+            <p class="ds-row__val" data-i18n="skills.3.v">Drivers (PCIe) · multithreading · temps réel · Lua/LuaJIT + FFI · assembleur x86</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">04</span>
+            <span class="ds-row__name" data-i18n="skills.4.k">Protocoles &amp; signal</span>
+            <p class="ds-row__val">SPI · RS-485 · UDP/Ethernet · FFT · PID</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">05</span>
+            <span class="ds-row__name" data-i18n="skills.5.k">GPU &amp; calcul parallèle</span>
+            <p class="ds-row__val" data-i18n="skills.5.v">CUDA <span class="note">(autodidacte, projet en cours)</span> · Nsight Systems · modèles de programmation parallèle</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">06</span>
+            <span class="ds-row__name" data-i18n="skills.6.k">Logiciel &amp; outils</span>
+            <p class="ds-row__val" data-i18n="skills.6.v">Git · Bash · Python (scripting) · Java (Quarkus, Hibernate, Kafka) · documentation technique</p>
+          </div>
+          <div class="ds-row">
+            <span class="ds-row__pin">07</span>
+            <span class="ds-row__name" data-i18n="skills.7.k">Langues</span>
+            <p class="ds-row__val" data-i18n="skills.7.v">Français (langue maternelle) · Anglais B2-C1 <span class="note">(TOEIC 890/990)</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 0x05 — contact -->
+    <section class="section" id="contact">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__num">0x05</span>
+          <h2 class="section__title" data-i18n="contact.title">Contact</h2>
+          <span class="section__rule"></span>
+        </div>
+
+        <div class="contact">
+          <div class="term">
+            <div class="term__bar"><span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>~/contact — mail</span></div>
+            <form class="form" id="contact-form" novalidate>
+              <p class="form__cmd" aria-hidden="true"><span class="prompt">$</span> ./contact --to antoine</p>
+
+              <div class="field">
+                <span class="label" id="topic-label" data-i18n="form.topic">objet</span>
+                <fieldset class="chips" aria-labelledby="topic-label">
+                  <input type="radio" name="topic" id="t-stage" value="stage" checked><label for="t-stage" data-i18n="form.t1">stage</label>
+                  <input type="radio" name="topic" id="t-projet" value="projet"><label for="t-projet" data-i18n="form.t2">un projet</label>
+                  <input type="radio" name="topic" id="t-autre" value="autre"><label for="t-autre" data-i18n="form.t3">autre</label>
+                </fieldset>
+              </div>
+              <div class="field">
+                <label for="f-name" data-i18n="form.name">nom</label>
+                <input type="text" id="f-name" name="name" autocomplete="name" maxlength="80" required data-i18n-attr="placeholder:form.namePh" placeholder="Ada Lovelace">
+              </div>
+              <div class="field">
+                <label for="f-org" data-i18n="form.org">société</label>
+                <input type="text" id="f-org" name="org" autocomplete="organization" maxlength="80" data-i18n-attr="placeholder:form.orgPh" placeholder="(facultatif)">
+              </div>
+              <div class="field">
+                <label for="f-msg" data-i18n="form.msg">message</label>
+                <textarea id="f-msg" name="message" maxlength="1500" required data-i18n-attr="placeholder:form.msgPh" placeholder="Bonjour Antoine, …"></textarea>
+              </div>
+
+              <div class="form__actions">
+                <button class="btn btn--primary" type="submit"><span data-i18n="form.send">envoyer</span> <span aria-hidden="true">⏎</span></button>
+                <span class="form__counter mono" id="f-count" aria-live="off">0 / 1500</span>
+              </div>
+
+              <div class="out" id="f-out" role="status" aria-live="polite" hidden></div>
+              <p class="form__note" data-i18n="form.note">Pas de service tiers : le formulaire prépare un e-mail dans votre messagerie, et rien ne transite par un autre serveur.</p>
+            </form>
+          </div>
+
+          <div class="direct">
+            <p class="direct__intro" data-i18n="contact.intro">Un stage, un projet, une question sur un article ? Écrivez-moi directement :</p>
+            <div class="link-row">
+              <span><span class="link-row__k">e-mail</span><span class="link-row__v" id="email-text">antoine.lassagne [at] outlook [dot] com</span></span>
+              <button class="copy" type="button" id="email-copy" data-i18n="contact.copy">copier</button>
+            </div>
+            <a class="link-row" id="link-github" href="https://github.com/AntoineLass" target="_blank" rel="noopener">
+              <span><span class="link-row__k">github</span><span class="link-row__v">AntoineLass</span></span>
+              <span class="link-row__go" aria-hidden="true">↗</span>
+            </a>
+            <a class="link-row" id="link-linkedin" href="#" target="_blank" rel="noopener" hidden>
+              <span><span class="link-row__k">linkedin</span><span class="link-row__v">Antoine Lassagne</span></span>
+              <span class="link-row__go" aria-hidden="true">↗</span>
+            </a>
+            <p class="direct__note" data-i18n="contact.cv">CV complet disponible sur demande.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span id="year">2026</span> Antoine Lassagne</span>
+      <span data-i18n="footer.made">fait main · HTML, CSS &amp; JS sans framework · <a href="https://github.com/AntoineLass/Portfolio" target="_blank" rel="noopener">code source</a></span>
+    </div>
+  </footer>
+
+  <div class="hud" id="hud" aria-hidden="true"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/projects.js" defer></script>
+  <script src="assets/js/ascii.js" defer></script>
+  <script src="assets/js/board.js" defer></script>
+  <script src="assets/js/robot.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
