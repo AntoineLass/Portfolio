@@ -616,8 +616,8 @@
     S.state = '';
     setState('trick');
     say(T('petSecret'), 1500);
-    var en = window.I18N && window.I18N.lang === 'en';
-    setTimeout(function () { window.location.href = 'nova.html' + (en ? '?lang=en' : ''); }, 750);
+    var lang = window.I18N ? window.I18N.lang : 'fr';   // la langue affichée suit le visiteur
+    setTimeout(function () { window.location.href = 'nova.html?lang=' + lang; }, 750);
   }
 
   pet.addEventListener('contextmenu', function (e) {

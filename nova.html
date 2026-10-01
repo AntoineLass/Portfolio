@@ -81,6 +81,7 @@
     (function () {
       var en = document.documentElement.dataset.lang === 'en';
       var back = document.getElementById('back');
+      back.href = 'index.html?lang=' + (en ? 'en' : 'fr');
       if (en) {
         back.href = 'index.html?lang=en';
         document.getElementById('game').setAttribute('aria-label', 'NOVA//RUN: an ASCII mini-game, a quadruped robot to drive with the keyboard');
