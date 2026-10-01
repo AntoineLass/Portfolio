@@ -89,9 +89,13 @@ libellés des ordres sont dans `assets/js/i18n.js` (`petSay`, `petCmds`,
 
 Un clic droit sur le compagnon (appui long sur mobile, ou le code Konami au
 clavier) ouvre `nova.html` : un petit monde 3D rendu en caractères ASCII, où
-l'on pilote un robot quadrupède. Tout le moteur tient dans `assets/js/game.js`
-(tampon de caractères avec profondeur, projection en perspective, physique et
-règles du jeu), sans bibliothèque.
+l'on pilote un robot quadrupède. Tout tient dans `assets/js/game.js`, sans
+bibliothèque : le rendu (tampon de caractères dense avec profondeur, fonds
+teintés, contours, ombres) et un petit moteur physique (corps rigides,
+contacts par impulsions, pattes en ressorts amortis, commande d'équilibre) —
+on peut culbuter, bousculer des caisses et tomber de la carte. Les réglages de
+conduite sont regroupés dans l'objet `CFG` ; `nova.html?debug` expose l'état
+du jeu dans `window.NOVA` pour les essais.
 
 ## Déploiement
 
